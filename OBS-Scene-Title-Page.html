@@ -5,6 +5,7 @@
 
     <!-- See settings.js for descriptions of the variables -->
     <script src="./settings.js"></script>
+    <script src="js/easy.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
 
     <script>
       /* The layoutPage() function sets the initial text and image properties
@@ -29,6 +30,21 @@
         image.src = settings.image;
         image.style.width = "100%";
         image.style.height = "100%";
+
+        /* Generate QR Code */
+        var options = {
+            text: settings.qrCodeUrl,
+            width: 256,
+            height: 256,
+            //colorDark : "#00205B",
+            colorDark : "#541E00",
+            colorLight : "#D9D3D0",
+            correctLevel : QRCode.CorrectLevel.H,
+            dotScale : 1.0,
+            dotScaleTiming : 1.0,
+            dotScaleA : 1.0
+        };
+        var qrcode = new QRCode(document.getElementById("js-qrcode"), options)
       }
 
       /* The updateTime() function calculates the difference between the current
@@ -94,6 +110,7 @@
 
     <style>
       .mhc-page {
+        position: relative;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -193,6 +210,19 @@
         object-fit: cover;
         object-position: center;
       }
+
+      .mhc-qrcode {
+        position: absolute;
+        bottom: 54px;
+        right: 96px;
+
+        width: 256px;
+        height: 256px;
+
+        padding: 4px;
+        border-radius: 6px;
+        background-color: rgb(217, 211, 208);
+      }
     </style>
   </head>
 
@@ -212,6 +242,7 @@
       <div class="mhc-image-container" id="js-image-container">
         <img class="mhc-image" id="js-image" alt="Please specify the image file in settings.js">
       </div>
+      <div class="mhc-qrcode" id="js-qrcode"></div>
     </div>
   </body>
 </html>

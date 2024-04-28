@@ -53,6 +53,9 @@ var settings = {
    */
   "image" : "title-images/example.jpg",
 
+  /* The <qrCodeUrl> variable specifies the URL that the QR code links to. */
+  "qrCodeUrl" : "https://messiahhalescorners.com/",
+
   /* The following two variables probably don't ever need to be edited. They
    * control the messaging behavior at the start of a service. There are three
    * different messages that can be displayed, when these messages are
