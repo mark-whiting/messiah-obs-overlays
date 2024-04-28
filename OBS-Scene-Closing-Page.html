@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="charset" charset="UTF-8">
+
+    <!-- See settings.js for descriptions of the variables -->
+    <script src="./settings.js"></script>
+
+    <script>
+      /* The layoutPage() function sets the initial text and image properties
+       * that were loaded from settings.js.
+       */
+      function layoutPage() {
+        /* Set the display image */
+        let image = document.getElementById("js-image");
+        image.src = settings.image;
+        image.style.width = "100%";
+        image.style.height = "100%";
+      }
+
+      /* This is called on page load to set the initial page layout and start
+       * the time update loop.
+       */
+      function onPageLoad() {
+        layoutPage()
+      }
+    </script>
+
+    <style>
+      .mhc-page {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        width: 1920px;
+        height: 1080px;
+      }
+
+      .mhc-content-container {
+        flex: 840 840 43.75%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        background-color: rgb(217, 211, 208);
+      }
+
+      .mhc-logo-container {
+        flex: 1;
+
+        padding: 1rem
+      }
+
+      .mhc-logo {
+      }
+
+      .mhc-title-container {
+        flex: 2;
+
+        display: flex;
+        align-items: center;
+
+        padding-top: 1rem;
+      }
+
+      .mhc-title {
+        flex: 1;
+
+        margin: 1rem;
+        font: bold 7rem "Segoe Script";
+        color: rgb(0, 32, 91);
+
+        border-width: 0.5rem 0 0.5rem 0;
+        border-style: solid;
+        border-color: rgb(0, 32, 91);
+      }
+
+      .mhc-image-container {
+        flex: 1080 1080 56.25%;
+
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+
+        background-color: rgb(0, 32, 91);
+      }
+
+      .mhc-image {
+        object-fit: cover;
+        object-position: center;
+      }
+    </style>
+  </head>
+
+  <body onload="onPageLoad()">
+    <div class="mhc-page">
+      <div class="mhc-content-container">
+        <div class="mhc-logo-container">
+          <img class="mhc-logo" id="js-logo" src="images/messiah-logo-centered.png">
+        </div>
+        <div class="mhc-title-container">
+          <div class="mhc-title" id="js-title">Go In Peace</div>
+        </div>
+      </div>
+      <div class="mhc-image-container" id="js-image-container">
+        <img class="mhc-image" id="js-image" alt="Please specify the image file in settings.js">
+      </div>
+    </div>
+  </body>
+</html>

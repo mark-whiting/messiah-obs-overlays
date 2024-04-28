@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="charset" charset="UTF-8">
+
+    <!-- See settings.js for descriptions of the variables -->
+    <script src="./settings.js"></script>
+
+    <script>
+      /* The layoutPage() function sets the initial text and image properties
+       * that were loaded from settings.js.
+       */
+      function layoutPage() {
+        /* Set the title */
+        document.getElementById("js-title").innerHTML = settings.title;
+
+        /* Set the passage */
+        document.getElementById("js-passage").innerHTML = settings.passage;
+
+        /* Set the passage reference */
+        if (settings.passageReference == "") {
+          document.getElementById("js-passage-reference").innerHTML = "";
+        } else {
+          document.getElementById("js-passage-reference").innerHTML = "- " + settings.passageReference;
+        }
+
+        /* Set the display image */
+        let image = document.getElementById("js-image");
+        image.src = settings.image;
+        image.style.width = "100%";
+        image.style.height = "100%";
+      }
+
+      /* The updateTime() function calculates the difference between the current
+       * time and the desired start time and displays the appropriate message.
+       */
+      function updateTime() {
+          /* Generate the target time in seconds since midnight */
+          const startSeconds = ((settings.startHour * 60) + settings.startMinute) * 60;
+
+          /* Get the current time in seconds since midnight */
+          const now = new Date();
+          let currentSeconds = (((now.getHours() * 60) + now.getMinutes()) * 60) + now.getSeconds();
+
+          /* Display the correct message */
+          const timeToStart = startSeconds - currentSeconds;
+
+          if ((timeToStart > 0) && (timeToStart < (settings.countdownMinutes * 60))) {
+            /* We're within <settings.countdownMinutes> of the target start time,
+             * display the countdown.
+             */
+            let minutesRemaining = Math.floor(timeToStart / 60);
+            let secondsRemaining = timeToStart % 60;
+            var timeStr;
+
+            if (secondsRemaining < 10) {
+              timeStr = `${minutesRemaining}:0${secondsRemaining}`;
+            } else {
+              timeStr = `${minutesRemaining}:${secondsRemaining}`;
+            }
+
+            document.getElementById("js-countdown").innerHTML = `Our service will start in ${timeStr}`;
+          } else if ((timeToStart <= 0) && (Math.abs(timeToStart) < (settings.startingMinutes * 60))) {
+            /* We're past the target start time but haven't exceeded it by
+             * more than <settings.startingMinutes>, display the starting soon message.
+             */
+            document.getElementById("js-countdown").innerHTML = "Our service will start momentarily...";
+          } else {
+            /* Otherwise, just display the expected start time. */
+            let meridiem = (settings.startHour < 12) ? "AM" : "PM";
+            let hour = (settings.startHour < 12) ? settings.startHour : settings.startHour - 12;
+            var timeStr;
+
+            if (settings.startMinute < 10) {
+              timeStr = `${hour}:0${settings.startMinute} ${meridiem}`
+            } else {
+              timeStr = `${hour}:${settings.startMinute} ${meridiem}`
+            }
+
+            document.getElementById("js-countdown").innerHTML = `Our service will start at ${timeStr}`;
+          }
+
+          setTimeout(updateTime, 1000);
+      }
+
+      /* This is called on page load to set the initial page layout and start
+       * the time update loop.
+       */
+      function onPageLoad() {
+        layoutPage()
+        updateTime()
+      }
+    </script>
+
+    <style>
+      .mhc-page {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        width: 1920px;
+        height: 1080px;
+      }
+
+      .mhc-content-container {
+        flex: 840 840 43.75%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        background-color: rgb(217, 211, 208);
+      }
+
+      .mhc-logo-container {
+        flex: 2;
+
+        padding: 1rem
+      }
+
+      .mhc-logo {
+      }
+
+      .mhc-title-container {
+        flex: 1;
+
+        display: flex;
+        align-items: center;
+
+        padding-top: 1rem;
+      }
+
+      .mhc-title {
+        flex: 1;
+
+        margin: 1rem;
+        font: bold 2.5rem "Segoe Script";
+        color: rgb(0, 32, 91);
+
+        border-width: 0.5rem 0 0.5rem 0;
+        border-style: solid;
+        border-color: rgb(0, 32, 91);
+      }
+
+      .mhc-passage {
+        flex: 0;
+
+        padding: 1rem;
+
+        font: italic 2rem "arial";
+        color: rgb(0, 32, 91);
+        text-align: center;
+        /* text-shadow: 0 0 0.25rem rgb(0, 32, 91); */
+      }
+
+      .mhc-passage-reference {
+        flex: 1;
+        align-self: flex-end;
+
+        padding-right: 2rem;
+        font: bold 1rem "arial";
+        color: rgb(0, 32, 91);
+      }
+
+      .mhc-countdown {
+        width: 100%;
+        vertical-align: bottom;
+
+        padding-top: 1rem;
+        padding-bottom: 3rem;
+
+        font: bold 3rem "arial";
+        color: rgb(0, 32, 91);
+        text-align: center;
+
+        border-width: 0.5rem 0 0 0;
+        border-style: solid;
+        border-color: rgb(0, 32, 91);
+      }
+
+      .mhc-image-container {
+        flex: 1080 1080 56.25%;
+
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+
+        background-color: rgb(0, 32, 91);
+      }
+
+      .mhc-image {
+        object-fit: cover;
+        object-position: center;
+      }
+    </style>
+  </head>
+
+  <body onload="onPageLoad()">
+    <div class="mhc-page">
+      <div class="mhc-content-container">
+        <div class="mhc-logo-container">
+          <img class="mhc-logo" id="js-logo" src="images/messiah-logo-centered.png">
+        </div>
+        <div class="mhc-title-container">
+          <div class="mhc-title" id="js-title"></div>
+        </div>
+        <div class="mhc-passage" id="js-passage"></div>
+        <div class="mhc-passage-reference" id="js-passage-reference"></div>
+        <div class="mhc-countdown" id="js-countdown"></div>
+      </div>
+      <div class="mhc-image-container" id="js-image-container">
+        <img class="mhc-image" id="js-image" alt="Please specify the image file in settings.js">
+      </div>
+    </div>
+  </body>
+</html>
