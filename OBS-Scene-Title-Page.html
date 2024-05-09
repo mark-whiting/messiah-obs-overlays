@@ -45,6 +45,13 @@
             dotScaleA : 1.0
         };
         var qrcode = new QRCode(document.getElementById("js-qrcode"), options)
+
+        /* Set QR Code label */
+        if (settings.qrCodeLabel == "") {
+          document.getElementById("js-qrcode-label").innerHTML = "";
+        } else {
+          document.getElementById("js-qrcode-label").innerHTML = settings.qrCodeLabel;
+        }
       }
 
       /* The updateTime() function calculates the difference between the current
@@ -211,16 +218,38 @@
         object-position: center;
       }
 
-      .mhc-qrcode {
+      .mhc-qrcode-container {
         position: absolute;
         bottom: 54px;
         right: 96px;
 
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center; 
+
         width: 256px;
-        height: 256px;
+        height: 304px;
 
         padding: 4px;
         border-radius: 6px;
+        background-color: rgb(217, 211, 208);
+      }
+
+      .mhc-qrcode {
+        width: 256px;
+        height: 256px;
+
+        background-color: rgb(217, 211, 208);
+      }
+
+      .mhc-qrcode-label {
+        width: 256px;
+
+        font: bold 1.75rem "arial";
+        color: rgb(84, 30, 00);
+        text-align: center;
+
         background-color: rgb(217, 211, 208);
       }
     </style>
@@ -242,7 +271,10 @@
       <div class="mhc-image-container" id="js-image-container">
         <img class="mhc-image" id="js-image" alt="Please specify the image file in settings.js">
       </div>
-      <div class="mhc-qrcode" id="js-qrcode"></div>
+      <div class="mhc-qrcode-container">
+        <div class="mhc-qrcode" id="js-qrcode"></div>
+        <div class="mhc-qrcode-label" id="js-qrcode-label"></div>
+      </div>
     </div>
   </body>
 </html>
