@@ -6,6 +6,7 @@
     <!-- See settings.js for descriptions of the variables -->
     <script src="./settings.js"></script>
     <script src="js/easy.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/title-image-loader.js" type="text/javascript" charset="utf-8"></script>
 
     <script>
       /* The layoutPage() function sets the initial text and image properties
@@ -13,10 +14,13 @@
        */
       function layoutPage() {
         /* Set the display image */
-        let image = document.getElementById("js-image");
-        image.src = settings.image;
-        image.style.width = "100%";
-        image.style.height = "100%";
+        title_options = {
+          image_mode: settings.image_mode,
+          fill_mode: settings.fill_mode,
+          background_color: settings.background_color
+        };
+
+        loadTitleImage("js-image", settings.image, title_options);
 
         /* Generate QR Code */
         var options = {
@@ -112,8 +116,8 @@
       }
 
       .mhc-image {
-        object-fit: cover;
-        object-position: center;
+        width: 100%;
+        height: 100%;
       }
 
       .mhc-qrcode-container {
@@ -164,7 +168,7 @@
         </div>
       </div>
       <div class="mhc-image-container" id="js-image-container">
-        <img class="mhc-image" id="js-image" alt="Please specify the image file in settings.js">
+        <canvas class="mhc-image" id="js-image">
       </div>
       <div class="mhc-qrcode-container">
         <div class="mhc-qrcode" id="js-qrcode"></div>

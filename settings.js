@@ -53,6 +53,13 @@ var settings = {
    */
   "image" : "title-images/example.jpg",
 
+  /* See the <options> parameter of _loadTitleImage() in
+   * js/title-image-loader.js for more information on these parameters.
+   */
+  "image_mode" : "fill",
+  "fill_mode" : "color",
+  "background_color" : "rgb(217, 211, 208)",
+
   /* The <qrCodeUrl> variable specifies the URL that the QR code links to. */
   "qrCodeUrl" : "https://messiahhalescorners.com/",
   "qrCodeLabel" : "Visit our Website",  
